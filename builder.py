@@ -8,6 +8,5 @@ reload(basic)
 reload(utility)
 reload(objectProperty)
 reload(modifier)
-reload(komediputar)
 
 utility.clear_scene()
