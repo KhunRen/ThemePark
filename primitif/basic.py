@@ -70,3 +70,8 @@ class Plane(Basic):
     def create(self):
         bpy.ops.mesh.primitive_plane_add(location=self.coords)
         self.object = bpy.context.object
+
+class Suzanne(Basic):
+    def create(self):
+        bpy.ops.mesh.primitive_monkey_add(location=self.coords)
+        self.object = bpy.context.object
