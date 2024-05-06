@@ -3,8 +3,10 @@ import elements.basics as basics
 import primitif.basic as basic
 import tools.utility as utility
 import tools.modifier as modifier
+import tools.objectProperty as objectProperty
 import bpy
 from importlib import reload
+import random
 reload(basics)
 
 class Horse(basics.BasicElement):
@@ -147,6 +149,7 @@ class Horse(basics.BasicElement):
 
         pole = basic.Cylinder(name="pole", coords=(0, 0, 12))
         pole.scale((0.2, 0.2, 7))
+        modifier.wireframe(pole.object, 0.08,0,False)
 
         utility.parent_objects(pole.object, horse_body.object)
 
@@ -185,6 +188,7 @@ class Horse(basics.BasicElement):
         tail.scale((0.44, 0.34, 2.03))
 
         modifier.subdivision_surface(tail.object, 2)
+        modifier.weld(tail.object, 0.552)
 
         utility.parent_objects(horse_body.object, butt.object)
         utility.parent_objects(butt.object, tail.object)
@@ -211,16 +215,140 @@ class Horse(basics.BasicElement):
             "leher": leher_joint.object,
             "head": head_joint.object,
         }
-            
+        
+class Bench(basics.BasicElement):
+    def create(self):
+        pole = basic.Cylinder(name="pole", coords=(0, 0, 12))
+        pole.scale((0.2, 0.2, 7))
+        modifier.wireframe(pole.object, 0.08,0,False)
+        self.mainObject = pole.object
+        
+        back_chair_top = basic.Cube(name="back_chair_top", coords=(-3.01355, 0, 4.09991))
+        back_chair_top.rotate((0,-17.8158,0))
+        back_chair_top.scale((0.14659,2.29195,0.879661))
+        
+        back_chart_bottom = basic.Cube(name="back_chair_bottom", coords=(-2.04148 , 0, 3.17498 ))
+        back_chart_bottom.rotate((0, 90,0))
+        back_chart_bottom.scale((0.14659,2.29195,0.879661))
+        
+        front_chair_top = basic.Cube(name="front_chair_top", coords=(2.05936,0,4.09991))
+        front_chair_top.rotate((0,-17.8158,0))
+        front_chair_top.scale((0.14659,2.29195,0.879661))
+        
+        front_chair_bottom = basic.Cube(name="front_chair_bottom", coords=(3.03143,0,3.17498))
+        front_chair_bottom.rotate((0,90,0))
+        front_chair_bottom.scale((0.14659,2.29195,0.879661))
+        
+        left_front_wheel = basic.Cube(name="left_front_wheel", coords=(2.65948, 2.39578 , 1.75656))
+        left_front_wheel.scale((1.9568,0.241142,2.14919))
+        modifier.subdivision_surface(left_front_wheel.object, 2)
+        
+        left_back_wheel = basic.Cube(name="left_back_wheel", coords=(-2.19804,2.39578,1.75656 ))
+        left_back_wheel.scale((1.9568,0.241142,2.14919))
+        modifier.subdivision_surface(left_back_wheel.object, 2)
+        
+        right_front_wheel = basic.Cube(name="right_front_wheel", coords=(2.65948 , -2.39456, 1.75656))
+        right_front_wheel.scale((1.9568,0.241142,2.14919))
+        modifier.subdivision_surface(right_front_wheel.object, 2)
+        
+        right_back_wheel = basic.Cube(name="right_back_wheel", coords=(-2.19804,-2.36187,1.75656))
+        right_back_wheel.scale((1.9568,0.241142,2.14919))
+        modifier.subdivision_surface(right_back_wheel.object, 2)
+        
+        modifier.apply_all_modifier(left_front_wheel.object)
+        modifier.apply_all_modifier(left_back_wheel.object)
+        modifier.apply_all_modifier(right_front_wheel.object)
+        modifier.apply_all_modifier(right_back_wheel.object)
+        
+
+        base = basic.Cube(name="base", coords=(0.629296,0.042405,1.10786))
+        base.scale((4.61913,2.31373,0.255156))
+        
+        pole_holder = basic.Cube(name="pole_holder", coords=(0,0,3.14642))
+        pole_holder.scale((0.326266,0.326266,1.88622))
+        
+        right_door = basic.Cube(name="right_door", coords=(0,-2.07894,1.94006))
+        right_door.scale((2.23383,0.256342,1.26739))
+        
+        left_door = basic.Cube(name="left_door", coords=(0,2.10664,1.94006 ))
+        left_door.scale((2.22383,0.256342,1.26739))
+        
+        back_board = basic.Cube(name="back_board", coords=(-3.62773,0.055628,3.03618))
+        back_board.scale((0.400066,2.32863,1.87668))
+        
+        front_bottom_board = basic.Cube(name="front_bottom_board", coords=(2.85704 ,0.055628,2.16409))
+        front_bottom_board.scale((0.699731,2.32863,1.05057))
+        
+        back_bottom_board = basic.Cube(name="back_bottom_board", coords=(-2.15277 ,0.055628 ,2.16409))
+        back_bottom_board.scale((0.699731,2.32863,1.05057))
+        
+        front_right_monkey = basic.Suzanne(name="front_right_monkey", coords=(2.62468,-2.60427,1.76302  ))
+        back_right_monkey = basic.Suzanne(name="back_right_monkey", coords=(-2.25274,-2.60427,1.76302))
+        
+        front_left_monkey = basic.Suzanne(name="front_left_monkey", coords=(2.62468,2.62928,1.76302 ))
+        front_left_monkey.rotate((0,0,180))
+        
+        back_left_monkey = basic.Suzanne(name="back_left_monkey", coords=(-2.24102 ,2.62928,1.76302))
+        back_left_monkey.rotate((0,0,180))
+        
+        utility.parent_objects(pole.object, base.object)
+        utility.parent_objects(base.object, back_chair_top.object)
+        utility.parent_objects(base.object, back_chart_bottom.object)
+        utility.parent_objects(base.object, front_chair_top.object)
+        utility.parent_objects(base.object, front_chair_bottom.object)
+        utility.parent_objects(base.object, left_front_wheel.object)
+        utility.parent_objects(base.object, left_back_wheel.object)
+        utility.parent_objects(base.object, right_front_wheel.object)
+        utility.parent_objects(base.object, right_back_wheel.object)
+        utility.parent_objects(base.object, pole_holder.object)
+        utility.parent_objects(base.object, right_door.object)
+        utility.parent_objects(base.object, left_door.object)
+        utility.parent_objects(base.object, back_board.object)
+        utility.parent_objects(base.object, front_bottom_board.object)
+        utility.parent_objects(base.object, back_bottom_board.object)
+        utility.parent_objects(base.object, front_right_monkey.object)
+        utility.parent_objects(base.object, back_right_monkey.object)
+        utility.parent_objects(base.object, front_left_monkey.object)
+        utility.parent_objects(base.object, back_left_monkey.object)
+
+        
+        
+        
+        self.allObjects = {
+            "back_chair_top": back_chair_top.object,
+            "back_chart_bottom": back_chart_bottom.object,
+            "front_chair_top": front_chair_top.object,
+            "front_chair_bottom": front_chair_bottom.object,
+            "left_front_wheel": left_front_wheel.object,
+            "left_back_wheel": left_back_wheel.object,
+            "right_front_wheel": right_front_wheel.object,
+            "right_back_wheel": right_back_wheel.object,
+            "base": base.object,
+            "pole_holder": pole_holder.object,
+            "right_door": right_door.object,
+            "left_door": left_door.object,
+            "back_board": back_board.object,
+            "front_bottom_board": front_bottom_board.object,
+            "back_bottom_board": back_bottom_board.object,
+            "front_right_monkey": front_right_monkey.object,
+            "back_right_monkey": back_right_monkey.object,
+            "front_left_monkey": front_left_monkey.object,
+            "back_left_monkey": back_left_monkey.object
+        }
+        
 class Komedi_putar(basics.BasicElement):
     def __init__(self, name, coordinates):
-        coordinates = (coordinates[0], coordinates[1], coordinates[2] + 1)
+        coordinates = (coordinates[0], coordinates[1], coordinates[2] + 1.5)
         super().__init__(name, coordinates)
         self.horses = []
         self.plot_horse()
         self.animate()
         
     def create(self):
+        base = basic.Cylinder(name="base", coords=(0, 0, -0.5))
+        base.scale((31.1973, 31.1973, 0.79709))
+        modifier.subdivision_surface(base.object, 3)
+        
         upper_base = basic.Cylinder(name="upper_base", coords=(0, 0, 1))
         upper_base.scale((20.2937, 20.2937, 1.07793))
         
@@ -231,34 +359,80 @@ class Komedi_putar(basics.BasicElement):
         center_pole = basic.Cylinder(name="center_pole", coords=(0, 0, 14.5379))
         center_pole.scale((5, 5, 13.79))
         
-        top_part = basic.Cone(name="top_part", coords=(0, 0, 27.9213 ))
-        top_part.scale((26.3782, 26.3782, 8.49961))
+        top_part = basic.Cone(name="top_part", coords=(0, 0, 35.9213 ))
+        top_part.scale((26.3782, 26.3782, 8.64961))
+        modifier.wireframe(top_part.object, 0.024, 1, False)
         
-        top_part_holder = basic.Torus(name="top_part_holder", coords=(0, 0, 18.3793))
+        top_part_holder = basic.Torus(name="top_part_holder", coords=(0, 0, 19.3793))
         top_part_holder.scale((23.6526, 23.6526, 7.92263))
         
-        utility.parent_objects(upper_base.object, lower_base.object)
-        utility.parent_objects(upper_base.object, center_pole.object)
-        utility.parent_objects(upper_base.object, top_part.object)
-        utility.parent_objects(upper_base.object, top_part_holder.object)
+        top_banner = basic.Torus(name="top_banner", coords=(0, 0, 27.1721 ))
+        top_banner.scale((23.8237,23.8237,23.8237))
         
+        top_wire = basic.Cylinder(name="top_wire", coords=(0, 0, 22.1694 ))
+        top_wire.scale((29.0064, 29.0064, 2.09852))
+        modifier.wireframe(top_wire.object, 0.02)
+        modifier.subdivision_surface(top_wire.object, 1)
         
-        self.mainObject = upper_base.object
+        fence = basic.Cylinder(name="fence", coords=(0, 0, 1.15))
+        fence.scale((27.3717,27.3717,1.47164))
+        modifier.wireframe(fence.object, 0.02)
+        
+        top_closer = basic.Cylinder(name="top_closer", coords=(0, 0, 23.7899))
+        top_closer.scale((20.2084, 20.2084, 1.22842))
+        
+        for i in range(0, 3):
+            pole_decor = basic.Cylinder(name=f"pole_decor{i}", coords=(0, 0, 20.0281- (7*i)))
+            pole_decor.scale((6.50674, 6.50674, 2.75145))
+            modifier.wireframe(pole_decor.object, 0.051,0,False)
+            utility.parent_objects(center_pole.object, pole_decor.object)
+        
+        top_ornament = basic.Cylinder(name="top_ornament", coords=(0, 0, 25.1319))
+        top_ornament.scale((23.8683,23.8683,8.4359))
+        modifier.wireframe(top_ornament.object, 0.02)
+        modifier.subdivision_surface(top_ornament.object, 1)
+        modifier.displace(top_ornament.object, 1, 0.959)
+        modifier.cast(top_ornament.object,-0.86)
+        
+        utility.parent_objects(base.object,top_ornament.object)
+        utility.parent_objects(base.object, upper_base.object)
+        utility.parent_objects(base.object, lower_base.object)
+        utility.parent_objects(base.object, center_pole.object)
+        utility.parent_objects(base.object, top_part.object)
+        utility.parent_objects(base.object, top_part_holder.object)
+        utility.parent_objects(base.object, top_banner.object)
+        utility.parent_objects(base.object, top_wire.object)
+        utility.parent_objects(base.object, fence.object)
+        utility.parent_objects(base.object, top_closer.object)
+        
+        self.mainObject = base.object
         self.allObjects = {
             "upper_base": upper_base.object,
             "lower_base": lower_base.object,
             "center_pole": center_pole.object,
             "top_part": top_part.object,
-            "top_part_holder": top_part_holder.object
+            "top_part_holder": top_part_holder.object,
+            "top_banner": top_banner.object,
+            "top_wire": top_wire.object,
+            "fence": fence.object
         }
     def plot_horse(self):
         for i in range(0, 360, 45):
             x = 15 * math.cos(math.radians(i))
             y = 15 * math.sin(math.radians(i))
-            height = 14
+            height = 16
             if i % 90 == 0:
-                height = 17
-            horse = Horse("horse", (x, y, height))
+                height = 19
+            
+            random_num = random.randint(0, 1)
+            horse = None
+            # horse = Horse("horse", (x, y, height))
+            
+            if random_num == 1:
+                horse = Bench("bench", (x, y, height))
+            else:
+                horse = Horse("horse", (x, y, height))
+                
             horse.rotate((0, 0, i+90))
             utility.parent_objects(self.allObjects["center_pole"], horse.mainObject)
             self.horses.append(horse)
