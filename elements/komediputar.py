@@ -201,6 +201,49 @@ class Horse(basics.BasicElement):
         kaki_kanan_belakang = kaki_belakang_kanan_atas_joint
         kaki_kanan_belakang.rename("kaki_kanan_belakang")
         
+        # MATERIALS
+        
+        gold = materials.create_material("gold",(0.98225,1,0.701102,1),1,1,0.135,(0.991101,0.952603,0.32074,1),0.100)
+        materials.assign_material(pole.object, gold)
+        
+        pink_plastic = materials.create_material("pink_plastic",(0.921581,0.254587,0.419168,1),0,0.5,0.5)
+        materials.assign_material(horse_body.object, pink_plastic)
+        materials.assign_material(kaki_kiri_atas.object, pink_plastic)
+        materials.assign_material(kaki_kiri_bawah.object, pink_plastic)
+        materials.assign_material(kaki_kanan_atas.object, pink_plastic)
+        materials.assign_material(kaki_kanan_bawah.object, pink_plastic)
+        materials.assign_material(kaki_belakang_kiri_atas.object, pink_plastic)
+        materials.assign_material(kaki_belakang_kiri_bawah.object, pink_plastic)
+        materials.assign_material(kaki_belakang_kiri_foot.object, pink_plastic)
+        materials.assign_material(kaki_belakang_kanan_atas.object, pink_plastic)
+        materials.assign_material(kaki_belakang_kanan_bawah.object, pink_plastic)
+        materials.assign_material(kaki_belakang_kanan_foot.object, pink_plastic)
+        materials.assign_material(leher.object, pink_plastic)
+        materials.assign_material(head.object, pink_plastic)
+        materials.assign_material(butt.object, pink_plastic)
+        
+        
+        red_pink_plastic = materials.create_material("red_pink_plastic",(0.838799,0.059511,0.266356,1),0,0.5,0.5)
+        materials.assign_material(tail.object, red_pink_plastic)
+        materials.assign_material(kaki_atas_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_bawah_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_belakang_kiri_atas_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_belakang_kiri_bawah_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_belakang_kiri_foot_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_belakang_kanan_atas_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_belakang_kanan_bawah_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_belakang_kanan_foot_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_kanan_atas_joint.object, red_pink_plastic)
+        materials.assign_material(kaki_kanan_bawah_joint.object, red_pink_plastic)
+        materials.assign_material(ear_left.object, red_pink_plastic)
+        materials.assign_material(ear_right.object, red_pink_plastic)
+        materials.assign_material(leher_joint.object, red_pink_plastic)
+        materials.assign_material(head_joint.object, red_pink_plastic)
+        materials.assign_material(back_head.object, red_pink_plastic)
+        
+        # MATERIALS
+        
+        
         self.mainObject = pole.object
         self.allObjects = {
             "body": horse_body.object,
@@ -314,6 +357,38 @@ class Bench(basics.BasicElement):
         utility.parent_objects(base.object, back_left_monkey.object)
         
         
+        # MATERIALS
+        
+        gold = materials.create_material("gold",(0.98225,1,0.701102,1),1,1,0.135,(0.991101,0.952603,0.32074,1),0.100)
+        materials.assign_material(pole.object, gold)
+        materials.assign_material(left_back_wheel.object, gold)
+        materials.assign_material(left_front_wheel.object, gold)
+        materials.assign_material(right_back_wheel.object, gold)
+        materials.assign_material(right_front_wheel.object, gold)
+        materials.assign_material(back_left_monkey.object, gold)
+        materials.assign_material(back_right_monkey.object, gold)
+        materials.assign_material(front_left_monkey.object, gold)
+        materials.assign_material(front_right_monkey.object, gold)
+        
+        red_dull = materials.create_material("red dull",(0.610496,0.078187,0.05448,1),0,1,0.311)
+        materials.assign_material(back_chair_top.object, red_dull)
+        materials.assign_material(back_chart_bottom.object, red_dull)
+        materials.assign_material(front_chair_top.object, red_dull)
+        materials.assign_material(front_chair_bottom.object, red_dull)
+        
+        blue_plastic = materials.create_material("blue plastic",(0.048171,0.250158,0.313989,1),0,1,0)
+        materials.assign_material(base.object, blue_plastic)
+        materials.assign_material(pole_holder.object, blue_plastic)
+        materials.assign_material(right_door.object, blue_plastic)
+        materials.assign_material(left_door.object, blue_plastic)
+        materials.assign_material(back_board.object, blue_plastic)
+        materials.assign_material(front_bottom_board.object, blue_plastic)
+        materials.assign_material(back_bottom_board.object, blue_plastic)
+        
+        
+        # MATERIALS
+        
+        
         self.allObjects = {
             "back_chair_top": back_chair_top.object,
             "back_chart_bottom": back_chart_bottom.object,
@@ -368,6 +443,8 @@ class Komedi_putar(basics.BasicElement):
         
         top_banner = basic.Torus(name="top_banner", coords=(0, 0, 27.1721 ))
         top_banner.scale((23.8237,23.8237,23.8237))
+        
+        objectProperty.shade_smooth(top_banner.object)
         
         top_wire = basic.Cylinder(name="top_wire", coords=(0, 0, 22.1694 ))
         top_wire.scale((29.0064, 29.0064, 2.09852))
