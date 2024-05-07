@@ -3,6 +3,7 @@ import tools.utility as utility
 import tools.objectProperty as objectProperty
 import tools.modifier as modifier
 import elements.komediputar as komediputar
+import elements.ombakbanyu_bawah as ombakbanyubawah
 from importlib import reload
 
 reload(basic)
@@ -10,10 +11,12 @@ reload(utility)
 reload(objectProperty)
 reload(modifier)
 reload(komediputar)
+reload(ombakbanyubawah)
 
 utility.clear_scene()
 
-komedi = komediputar.Komedi_putar("komedi", (0, 0, 0))
+komedi = ombakbanyubawah.Ombak_banyu("ombakbawah", (0, 0, 0))
+# komedi = komediputar.Komedi_putar("komedi", (0, 0, 0))
 # komedi.rotate((0, 90, 0))
 # komedi.translate((0, 0, 10))
 
