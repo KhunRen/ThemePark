@@ -4,10 +4,12 @@ import primitif.basic as basic
 import tools.utility as utility
 import tools.modifier as modifier
 import tools.objectProperty as objectProperty
+import tools.materials as materials
 import bpy
 from importlib import reload
 import random
 reload(basics)
+reload(materials)
 
 class Horse(basics.BasicElement):
     def create(self):
@@ -310,8 +312,6 @@ class Bench(basics.BasicElement):
         utility.parent_objects(base.object, back_right_monkey.object)
         utility.parent_objects(base.object, front_left_monkey.object)
         utility.parent_objects(base.object, back_left_monkey.object)
-
-        
         
         
         self.allObjects = {
@@ -381,11 +381,15 @@ class Komedi_putar(basics.BasicElement):
         top_closer = basic.Cylinder(name="top_closer", coords=(0, 0, 23.7899))
         top_closer.scale((20.2084, 20.2084, 1.22842))
         
+        pole_decors = []
+        
         for i in range(0, 3):
             pole_decor = basic.Cylinder(name=f"pole_decor{i}", coords=(0, 0, 20.0281- (7*i)))
             pole_decor.scale((6.50674, 6.50674, 2.75145))
             modifier.wireframe(pole_decor.object, 0.051,0,False)
             utility.parent_objects(center_pole.object, pole_decor.object)
+            
+            pole_decors.append(pole_decor)
         
         top_ornament = basic.Cylinder(name="top_ornament", coords=(0, 0, 25.1319))
         top_ornament.scale((23.8683,23.8683,8.4359))
@@ -404,6 +408,33 @@ class Komedi_putar(basics.BasicElement):
         utility.parent_objects(base.object, top_wire.object)
         utility.parent_objects(base.object, fence.object)
         utility.parent_objects(base.object, top_closer.object)
+        
+        # ================== materials
+        
+        blue_plastic = materials.create_material("blue plastic",(0.048171,0.250158,0.313989,1),0,1,0)
+        materials.assign_material(top_part.object, blue_plastic)
+        materials.assign_material(top_part_holder.object, blue_plastic)
+        materials.assign_material(top_closer.object, blue_plastic)
+        materials.assign_material(top_ornament.object, blue_plastic)
+        materials.assign_material(fence.object, blue_plastic)
+        
+        red_dull = materials.create_material("red dull",(0.610496,0.078187,0.05448,1),0,1,0.311)
+        materials.assign_material(top_banner.object, red_dull)
+        materials.assign_material(lower_base.object, red_dull)
+        materials.assign_material(base.object, red_dull)
+        for pole_decor in pole_decors:
+            materials.assign_material(pole_decor.object, red_dull)
+        
+        gold = materials.create_material("gold",(0.98225,1,0.701102,1),1,1,0.135,(0.991101,0.952603,0.32074,1),0.100)
+        materials.assign_material(top_wire.object, gold)
+        
+        cream_matte = materials.create_material("cream matte",(0.846873,0.571124,0.274677,1),0,0.486,0.5)
+        materials.assign_material(upper_base.object, cream_matte)
+        
+        mirror_matte = materials.create_material("mirror matte",(0.8,0.8,0.8,1),0.676,1,0)
+        materials.assign_material(center_pole.object, mirror_matte)
+        
+        # ================== materials
         
         self.mainObject = base.object
         self.allObjects = {
