@@ -475,6 +475,9 @@ class Komedi_putar(basics.BasicElement):
         modifier.displace(top_ornament.object, 1, 0.959)
         modifier.cast(top_ornament.object,-0.86)
         
+        neon_light = basic.Torus(name="neon_light", coords=(0, 0, 22.7508))
+        neon_light.scale((23.2113,23.2113,23.2113))
+        
         utility.parent_objects(base.object,top_ornament.object)
         utility.parent_objects(base.object, upper_base.object)
         utility.parent_objects(base.object, lower_base.object)
@@ -485,6 +488,7 @@ class Komedi_putar(basics.BasicElement):
         utility.parent_objects(base.object, top_wire.object)
         utility.parent_objects(base.object, fence.object)
         utility.parent_objects(base.object, top_closer.object)
+        utility.parent_objects(base.object, neon_light.object)
         
         # ================== materials
         
@@ -510,6 +514,9 @@ class Komedi_putar(basics.BasicElement):
         
         mirror_matte = materials.create_material("mirror matte",(0.8,0.8,0.8,1),0.676,1,0)
         materials.assign_material(center_pole.object, mirror_matte)
+        
+        neon = materials.create_material("neon",(0.8,0.8,0.8,1),0,0.5,0.5,(1,0.290841,0.75787,1),7)
+        materials.assign_material(neon_light.object, neon)
         
         # ================== materials
         

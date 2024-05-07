@@ -77,3 +77,41 @@ def color_management(display_device="sRGB",view_transform="Standard",look="None"
     bpy.context.scene.view_settings.exposure = exposure
     bpy.context.scene.view_settings.gamma = gamma
     bpy.context.scene.sequencer_colorspace_settings.name = sequencer
+    
+def hide_hdri(hdri_path):
+    
+    C = bpy.context
+    scn = C.scene
+
+    node_tree = scn.world.node_tree
+    tree_nodes = node_tree.nodes
+    links = node_tree.links
+    for node in tree_nodes:
+        tree_nodes.remove(node)
+
+    node_background = tree_nodes.new(type='ShaderNodeBackground')
+
+    node_environment = tree_nodes.new('ShaderNodeTexEnvironment')
+    node_environment.image = bpy.data.images.load(hdri_path)
+    node_environment.location = -300,0
+
+    node_output = tree_nodes.new(type='ShaderNodeOutputWorld')   
+    node_output.location = 200,0
+
+    links = node_tree.links
+    link = links.new(node_environment.outputs["Color"], node_background.inputs["Color"])
+    
+    node_mix = tree_nodes.new(type='ShaderNodeMixShader')
+    node_mix.location = 0, 200
+
+    node_light_path = tree_nodes.new(type='ShaderNodeLightPath')
+    node_light_path.location = -300, 200
+    
+    black = tree_nodes.new(type='ShaderNodeBackground')
+    black.inputs['Color'].default_value = (0,0,0,1)
+
+
+    link = links.new(node_light_path.outputs['Is Camera Ray'], node_mix.inputs['Fac'])
+    link = links.new(node_background.outputs['Background'], node_mix.inputs[1])
+    link = links.new(black.outputs['Background'], node_mix.inputs[2])
+    link = links.new(node_mix.outputs['Shader'], node_output.inputs['Surface'])
