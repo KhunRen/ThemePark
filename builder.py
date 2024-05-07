@@ -5,6 +5,7 @@ import tools.modifier as modifier
 import elements.komediputar as komediputar
 import elements.ombakbanyu_bawah as ombakbanyubawah
 import elements.ombakbanyu_atas as ombakatas
+import elements.ombakbanyu as ombakbanyu
 from importlib import reload
 
 reload(basic)
@@ -12,17 +13,17 @@ reload(utility)
 reload(objectProperty)
 reload(modifier)
 reload(komediputar)
-reload(ombakbanyubawah)
+reload(ombakbanyu)
 
 utility.clear_scene()
 
-komedi = ombakbanyubawah.Ombak_banyu("ombakbawah", (0, 0, 0))
+# komedi = ombakbanyubawah.Ombak_banyu("ombakbawah", (0, 0, 0))
 # komedi = komediputar.Komedi_putar("komedi", (0, 0, 0))
 reload(ombakatas)
-utility.clear_scene()
+ombak_banyu = ombakbanyu.OmbakBanyu("Ombak Banyu", (0,0,0))
 
 # komedi = komediputar.Komedi_putar("komedi", (0, 0, 0))
-ombak = ombakatas.OmbakBanyu_Atas("ombakatas", (0,0,0))
+# ombak = ombakatas.OmbakBanyu_Atas("ombakatas", (0,0,0))
 # komedi.rotate((0, 90, 0))
 # komedi.translate((0, 0, 10))
 
