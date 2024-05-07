@@ -34,3 +34,4 @@ class BasicElement:
         bpy.context.object.modifiers["Mirror"].use_axis[1] = axis[1]
         bpy.context.object.modifiers["Mirror"].use_axis[2] = axis[2]
         
+        
