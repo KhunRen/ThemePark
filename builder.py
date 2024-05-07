@@ -4,7 +4,6 @@ import tools.render as render
 import tools.objectProperty as objectProperty
 import tools.modifier as modifier
 import lights.basic as lightbasic
-import os
 from importlib import reload
 
 reload(basic)
@@ -14,12 +13,11 @@ reload(modifier)
 reload(lightbasic)
 reload(render)
 
-folder_path = os.path.realpath(__file__)
-folder_path = folder_path.replace("builder.py", "")
-
 utility.clear_scene()
 utility.clear_materials()
-render.set_HDRI("//HDRs/satara_night_2k.hdr")
+utility.delete_light_cache()
+
+render.hide_hdri("//HDRs/satara_night_2k.hdr")
 render.set_viewport_shading_material(True,True,0,1,1,0)
 render.eevee_sampling(64, 16, False)
 render.eevee_ambient_occlusion()

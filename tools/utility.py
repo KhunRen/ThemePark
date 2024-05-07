@@ -57,4 +57,11 @@ def parent_objects(parent_obj, child_obj):
         o.parent = act
         o.matrix_parent_inverse = act.matrix_world.inverted() @ o.matrix_world
         o.matrix_world = mat_world
-        
+
+def bake_indirect_lighting():
+    bpy.ops.scene.light_cache_bake()
+def delete_light_cache():
+    try:
+        bpy.ops.scene.light_cache_free()
+    except:
+        pass
