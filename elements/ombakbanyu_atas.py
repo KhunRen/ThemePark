@@ -16,37 +16,33 @@ class OmbakBanyu_Atas(basics.BasicElement):
         self.animate()
         
     def create(self):
-        base = basic.Cylinder(name="base", coords=(0, 0, -0.5))
-        base.scale((31.1973, 31.1973, 0.79709))
-        modifier.subdivision_surface(base.object, 3)
+        top_cone = basic.Cone(name="top_cone", coords=(0, 0, 36.8413 ))
+        top_cone.scale((30, 30, 5.28961))
+        modifier.wireframe(top_cone.object, 0.024, 1, False)
         
-        top_part = basic.Cone(name="top_part", coords=(0, 0, 36.8413 ))
-        top_part.scale((30, 30, 5.28961))
-        modifier.wireframe(top_part.object, 0.024, 1, False)
+        seat = basic.Torus(name="seat", coords=(0, 0, 19.7393))
+        seat.scale((23.6526, 23.6526, 2.09852))
         
-        top_part_holder = basic.Torus(name="top_part_holder", coords=(0, 0, 19.7393))
-        top_part_holder.scale((23.6526, 23.6526, 2.09852))
-        
-        top_wire = basic.Cylinder(name="top_wire", coords=(0, 0, 22.1694 ))
-        top_wire.scale((29.0064, 29.0064, 2.09852))
-        modifier.wireframe(top_wire.object, 0.02)
-        modifier.subdivision_surface(top_wire.object, 1)
+        back_rest = basic.Cylinder(name="back_rest", coords=(0, 0, 22.1694 ))
+        back_rest.scale((29.0064, 29.0064, 2.09852))
+        modifier.wireframe(back_rest.object, 0.02)
+        modifier.subdivision_surface(back_rest.object, 1)
         
         fence = basic.Cylinder(name="fence", coords=(0, 0, 27.85))
         fence.scale((29.0064,29.0064,3.58164))
         modifier.wireframe(fence.object, 0.02)
         
         
-        utility.parent_objects(top_part_holder.object,top_wire.object)
-        utility.parent_objects(top_part_holder.object,fence.object)
-        utility.parent_objects(top_part_holder.object,top_part.object)
+        utility.parent_objects(seat.object,back_rest.object)
+        utility.parent_objects(seat.object,fence.object)
+        utility.parent_objects(seat.object,top_cone.object)
         
         
-        self.mainObject = base.object
+        self.mainObject = seat.object
         self.allObjects = {
-            "top_part": top_part.object,
-            "top_part_holder": top_part_holder.object,
-            "top_wire": top_wire.object,
+            "top_cone": top_cone.object,
+            "seat": seat.object,
+            "back_rest": back_rest.object,
             "fence": fence.object
         }
             
@@ -59,16 +55,16 @@ class OmbakBanyu_Atas(basics.BasicElement):
             # Rotasi terhadap sumbu Y
             if i <= total_frames / 2:
                 # Bagian 1 (frame 1 - 250)
-                self.allObjects["top_part_holder"].rotation_euler[1] = math.radians(-7.08689 * (i / (total_frames / 2)))
+                self.allObjects["seat"].rotation_euler[1] = math.radians(-7.08689 * (i / (total_frames / 2)))
             else:
                 # Bagian 2 (frame 251 - 500)
-                self.allObjects["top_part_holder"].rotation_euler[1] = math.radians(-7.08689 * (1 - (i - total_frames / 2) / (total_frames / 2)))
+                self.allObjects["seat"].rotation_euler[1] = math.radians(-7.08689 * (1 - (i - total_frames / 2) / (total_frames / 2)))
             
             # Rotasi terhadap sumbu Z
-            self.allObjects["top_part_holder"].rotation_euler[2] = math.radians(20 * i)
+            self.allObjects["seat"].rotation_euler[2] = math.radians(20 * i)
             
-            # Menyisipkan keyframe untuk rotasi objek "top_part_holder"
-            self.allObjects["top_part_holder"].keyframe_insert(data_path="rotation_euler", frame=i)
+            # Menyisipkan keyframe untuk rotasi objek "seat"
+            self.allObjects["seat"].keyframe_insert(data_path="rotation_euler", frame=i)
         
         
         
