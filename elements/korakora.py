@@ -81,7 +81,7 @@ class Frame(basics.BasicElement):
         pole = basic.Cylinder(name="pole", coords=(0, 0, 60))
         # lock rotation of x and z by 90
         
-        pole.rotate((90, 90, 90))
+        pole.rotate((90, 0, 90))
         
         pole.scale((1.3, 1.3, 19.8))
         # modifier.wireframe(pole.object, 0.08,0,False)
@@ -143,21 +143,23 @@ class Kora_Kora(basics.BasicElement):
         }
 
     def animate(self):
+        
         end_frame = bpy.context.scene.frame_end
-        rotation_direction = 1  # Arah rotasi awal adalah positif
+        mode="maju"
+        rotation=0
         
         for i in range(1, end_frame+1):
-            # Mengonversi derajat ke radian
-            rotation_angle = math.radians(i * 2 * rotation_direction)
+            if rotation >= 70:
+                mode="mundur"
+            elif rotation <= -70:
+                mode="maju"
+                
+            if mode=="maju":
+                rotation+=1
+            else:
+                rotation-=1
             
-            # Membatasi rotasi dalam rentang 0 sampai 2*pi (360 derajat)
-            rotation_angle %= 2 * math.pi
-            
-            # Mengubah arah rotasi jika mencapai batas tertentu
-            if rotation_angle >= math.radians(333):
-                rotation_direction = -1
-            elif rotation_angle <= math.radians(27):
-                rotation_direction = 1
-            
-            self.allObjects["pole"].rotation_euler[1] = rotation_angle
+            self.allObjects["pole"].rotation_euler = (math.radians(90), 
+                                                      math.radians(rotation), 
+                                                      math.radians(90))
             self.allObjects["pole"].keyframe_insert(data_path="rotation_euler", frame=i)
