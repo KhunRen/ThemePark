@@ -18,11 +18,17 @@ def set_viewport_shading(mode):
                 if space.type == 'VIEW_3D':
                     space.shading.type = mode
                     break
+            break
+        
 
 
 def clear_scene():
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.object.delete()
+
+def clear_materials():
+    for m in bpy.data.materials:
+        bpy.data.materials.remove(m)
 
 def select_object(obj, delete_others=False):
     if delete_others:
