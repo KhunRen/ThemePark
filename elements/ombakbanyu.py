@@ -3,13 +3,14 @@ import elements.basics as basics
 import primitif.basic as basic
 import tools.utility as utility
 import tools.modifier as modifier
+import tools.materials as materials
 import tools.objectProperty as objectProperty
 import bpy
 from importlib import reload
 import random
 
 reload(basics)
-
+reload(materials)
 
 class OmbakBanyu(basics.BasicElement):
     def __init__(self, name, coordinates):
@@ -99,9 +100,6 @@ class OmbakBanyu(basics.BasicElement):
         top_sphere_2 = basic.Sphere(name="top_sphere_2", coords=(0, 0, 31.5))
         top_sphere_2.scale((1, 1, 1))
 
-        top_sphere_3 = basic.Sphere(name="top_sphere_3", coords=(0, 0, 35.5))
-        top_sphere_3.scale((0.5, 0.5, 0.5))
-
         fence = basic.Cylinder(name="fence", coords=(0, 0, -0.02))
         fence.scale((32.9, 32.9, 1.7))
         modifier.wireframe(fence.object, 0.02)
@@ -121,9 +119,19 @@ class OmbakBanyu(basics.BasicElement):
         utility.parent_objects(base.object, diagonal_pole_4.object)
         utility.parent_objects(base.object, top_sphere_1.object)
         utility.parent_objects(base.object, top_sphere_2.object)
-        utility.parent_objects(base.object, top_sphere_3.object)
         utility.parent_objects(base.object, fence.object)
 
+
+        merah_carnival = materials.create_material("merah_carnival",(1.000,0.258994,0.286138,1.000),0,1.000)
+        materials.assign_material(top_cone.object, merah_carnival)
+        materials.assign_material(cantilever_pole_1.object, merah_carnival)
+        materials.assign_material(cantilever_pole_2.object, merah_carnival)
+        materials.assign_material(cantilever_pole_3.object, merah_carnival)
+        materials.assign_material(cantilever_pole_4.object, merah_carnival)
+        materials.assign_material(ring_decor_2.object, merah_carnival)
+
+        pink_pastel = materials.create_material("pink_pastel", (0.8,0.558836,0.57774,1.000),0,0.5,0.5)
+        materials.assign_material()
         self.mainObject = base.object
         self.topObjects = {
             "top_cone": top_cone.object,
@@ -144,7 +152,6 @@ class OmbakBanyu(basics.BasicElement):
             "diagonal_pole_4": diagonal_pole_4.object,
             "top_sphere_1": top_sphere_1.object,
             "top_sphere_2": top_sphere_2.object,
-            "top_sphere_3": top_sphere_3.object,
             "fence": fence.object,
         }
 

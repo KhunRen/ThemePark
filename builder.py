@@ -27,7 +27,7 @@ folder_path = folder_path.replace("builder.py", "")
 
 utility.clear_scene()
 utility.clear_materials()
-render.set_HDRI("//HDRs/satara_night_2k.hdr")
+# render.set_HDRI("//HDRs/satara_night_2k.hdr")
 render.set_viewport_shading_material(True,True,0,1,1,0)
 render.eevee_sampling(64, 16, False)
 # render.eevee_ambient_occlusion()
