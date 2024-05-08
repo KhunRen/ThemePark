@@ -5,13 +5,19 @@ import tools.utility as utility
 import tools.modifier as modifier
 import tools.objectProperty as objectProperty
 import tools.materials as materials
+import objs.importer as objimporter
 import bpy
 from importlib import reload
 import random
 reload(basics)
 reload(materials)
+reload(objimporter)
 
 class Horse(basics.BasicElement):
+    def __init__(self, name, coordinates, rider=False):
+        self.rider = rider
+        super().__init__(name, coordinates)
+        
     def create(self):
         horse_body = basic.Cylinder(name="horse_body", coords=(0, 0, 5))
         horse_body.rotate((0, 90, 0))
@@ -241,8 +247,29 @@ class Horse(basics.BasicElement):
         materials.assign_material(head_joint.object, red_pink_plastic)
         materials.assign_material(back_head.object, red_pink_plastic)
         
-        # MATERIALS
+        objectProperty.shade_smooth(head_joint.object)
+        objectProperty.shade_smooth(leher_joint.object)
+        objectProperty.shade_smooth(kaki_atas_joint.object)
+        objectProperty.shade_smooth(kaki_bawah_joint.object)
+        objectProperty.shade_smooth(kaki_belakang_kiri_atas_joint.object)
+        objectProperty.shade_smooth(kaki_belakang_kiri_bawah_joint.object)
+        objectProperty.shade_smooth(kaki_belakang_kiri_foot_joint.object)
+        objectProperty.shade_smooth(kaki_belakang_kanan_atas_joint.object)
+        objectProperty.shade_smooth(kaki_belakang_kanan_bawah_joint.object)
+        objectProperty.shade_smooth(kaki_belakang_kanan_foot_joint.object)
+        objectProperty.shade_smooth(kaki_kanan_atas_joint.object)
+        objectProperty.shade_smooth(kaki_kanan_bawah_joint.object)
+        objectProperty.shade_smooth(butt.object)
+        objectProperty.shade_flat(tail.object)
         
+        # MATERIALS
+        if self.rider:
+            cj = objimporter.OBJ("objs/asset/CJ_sitting_horse/CJ_sitting_horse.obj", True)
+            cj.translate((-1.05619  ,0,1.6273 ))
+            cj.scale((28.6811,28.6811,28.6811))
+            cj.rotate((90,0,36.4799))
+        
+            utility.parent_objects(horse_body.object, cj.objects[0])
         
         self.mainObject = pole.object
         self.allObjects = {
@@ -262,6 +289,9 @@ class Horse(basics.BasicElement):
         }
         
 class Bench(basics.BasicElement):
+    def __init__(self, name, coordinates, rider=False):
+        self.rider = rider
+        super().__init__(name, coordinates)
     def create(self):
         pole = basic.Cylinder(name="pole", coords=(0, 0, 12))
         pole.scale((0.2, 0.2, 7))
@@ -388,6 +418,13 @@ class Bench(basics.BasicElement):
         
         # MATERIALS
         
+        if self.rider:
+            cj = objimporter.OBJ("objs/asset/CJ_sitting_horse/CJ_sitting_car.obj", True)
+            cj.translate((0.366422,-1.37999,1.21764))
+            cj.rotate((90,0,0))
+            cj.scale((28.6811,28.6811,28.6811))
+            
+            utility.parent_objects(base.object, cj.objects[0])
         
         self.allObjects = {
             "back_chair_top": back_chair_top.object,
@@ -423,6 +460,7 @@ class Komedi_putar(basics.BasicElement):
         base = basic.Cylinder(name="base", coords=(0, 0, -0.5))
         base.scale((31.1973, 31.1973, 0.79709))
         modifier.subdivision_surface(base.object, 3)
+        objectProperty.shade_smooth(base.object)
         
         upper_base = basic.Cylinder(name="upper_base", coords=(0, 0, 1))
         upper_base.scale((20.2937, 20.2937, 1.07793))
@@ -541,12 +579,16 @@ class Komedi_putar(basics.BasicElement):
             
             random_num = random.randint(0, 1)
             horse = None
+            
+            use_rider = False
+            if random.randint(0, 1) == 1:
+                use_rider = True
             # horse = Horse("horse", (x, y, height))
             
             if random_num == 1:
-                horse = Bench("bench", (x, y, height))
+                horse = Bench("bench", (x, y, height), use_rider)
             else:
-                horse = Horse("horse", (x, y, height))
+                horse = Horse("horse", (x, y, height), use_rider)
                 
             horse.rotate((0, 0, i+90))
             utility.parent_objects(self.allObjects["center_pole"], horse.mainObject)

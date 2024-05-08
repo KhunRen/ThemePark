@@ -30,14 +30,19 @@ def clear_materials():
     for m in bpy.data.materials:
         bpy.data.materials.remove(m)
 
-def select_object(obj, delete_others=False):
-    if delete_others:
+def select_object(obj, deselect_other=False):
+    if deselect_other:
         deselect_all()
-    obj.select_set(True)
-    bpy.context.view_layer.objects.active = obj
+    if isinstance(obj, list):
+        for o in obj:
+            o.select_set(True)
+    else:
+        obj.select_set(True)
+        bpy.context.view_layer.objects.active = obj
     
 def deselect_all():
     bpy.ops.object.select_all(action='DESELECT')
+    
     
     
 def random_string(length):
