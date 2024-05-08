@@ -12,11 +12,14 @@ def add_colour(obj, colour):
 
     
 def shade_smooth(obj):
-    utility.select_object(obj)
+    utility.select_object(obj, True)
     bpy.ops.object.shade_smooth()
     
 def shade_auto_smooth(obj, angle=30):
     utility.select_object(obj)
     bpy.context.object.data.use_auto_smooth = True
     bpy.context.object.data.auto_smooth_angle = angle
-    
+
+def shade_flat(obj):
+    utility.select_object(obj, True)
+    bpy.ops.object.shade_flat()
