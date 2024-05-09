@@ -34,6 +34,23 @@ class Basic:
 
     def rename(self, name):
         self.object.name = name
+        
+    def hide(self):
+        self.object.hide_viewport = True
+        self.object.hide_render = True
+        
+    def show(self):
+        self.object.hide_viewport = False
+        self.object.hide_render = False
+    
+    def remove(self):
+        bpy.data.objects.remove(self.object)
+
+
+class Plane(Basic):
+    def create(self):
+        bpy.ops.mesh.primitive_plane_add(location=self.coords)
+        self.object = bpy.context.object
 
 
 class Cube(Basic):
@@ -70,6 +87,7 @@ class Plane(Basic):
     def create(self):
         bpy.ops.mesh.primitive_plane_add(location=self.coords)
         self.object = bpy.context.object
+
 
 class Suzanne(Basic):
     def create(self):
