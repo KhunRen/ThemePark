@@ -3,6 +3,7 @@ import tools.utility as utility
 import tools.render as render
 import tools.objectProperty as objectProperty
 import tools.modifier as modifier
+import elements.hysteria as Hysteria
 import lights.basic as lightbasic
 import objs.importer as objimporter
 from importlib import reload
@@ -11,6 +12,7 @@ reload(basic)
 reload(utility)
 reload(objectProperty)
 reload(modifier)
+reload(Hysteria)
 reload(lightbasic)
 reload(render)
 reload(objimporter)
@@ -26,3 +28,5 @@ render.eevee_ambient_occlusion()
 render.eevee_bloom()
 render.eevee_screen_space_reflections()
 render.color_management("sRGB", "Filmic", "Medium High Contrast")
+
+hysteria = Hysteria.Hysteria("Hysteria", (0,0,100))
