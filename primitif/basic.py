@@ -7,6 +7,7 @@ class Basic:
     def __init__(self, name=utility.random_string(5), coords=(0, 0, 0)):
         self.coords = coords
         self.object = None
+        self.name = name
 
         self.create()
         self.rename(name)
@@ -93,3 +94,12 @@ class Suzanne(Basic):
     def create(self):
         bpy.ops.mesh.primitive_monkey_add(location=self.coords)
         self.object = bpy.context.object
+
+class Text(Basic):
+    def create(self):
+        bpy.ops.object.text_add(location=self.coords)
+        self.object = bpy.context.object
+        self.object.data.extrude = 0.1
+        
+        self.object.data.body = self.name
+        

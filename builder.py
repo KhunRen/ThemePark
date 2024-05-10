@@ -39,6 +39,7 @@ gate.scale((1.66563,1.28508,0.447452))
 ombak_banyu = ombakbanyu.OmbakBanyu("Ombak Banyu", (0,-5.33983,-1.44876 ))
 ombak_banyu.scale((0.988065,0.988065,0.033877))
 
+
 render.hide_hdri("//HDRs/satara_night_2k.hdr")
 render.set_viewport_shading_material(True, True, 0, 1, 1, 0)
 render.eevee_sampling(64, 16, False)
@@ -49,5 +50,9 @@ render.color_management("sRGB", "Filmic", "Medium High Contrast")
 
 irradiance = lightbasic.Irradiance_Volume("irradiance", (0, 0, 0.65),4.8,0,1,(6,6,6),0.01,10)
 irradiance.scale((1.5,1.5,1.5))
+
+irradiance_2 = lightbasic.Irradiance_Volume("irradiance_2", (0, 0, 1.31782))
+irradiance_2.scale((8.02666,8.02666,1.76666))
+
 utility.bake_indirect_lighting()
 
