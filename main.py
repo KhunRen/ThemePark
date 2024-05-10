@@ -15,3 +15,5 @@ bpy.context.scene.frame_set(1)
 
 import builder
 reload(builder)
+
+builder.buiild()
