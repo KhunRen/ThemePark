@@ -28,30 +28,25 @@ class RotateThing(basics.BasicElement):
         self.allObjects = {
             "Cutter1" : Cutter1,
         }
-        Cutter1 = bpy.context.object
+        # Cutter1 = bpy.context.object
     
         yangNaikTurun = basic.Cylinder(name="yangNaikTurun", coords=(0, 0, 100))
         yangNaikTurun.scale((40, 40, 15)) 
         yangNaikTurun = bpy.context.object
 
-        bool_mod = Cutter1.modifiers.new(type="BOOLEAN", name="Boolean")
-        bool_mod.object = yangNaikTurun
-        bool_mod.operation = 'DIFFERENCE'
+        modifier.boolean_difference(Cutter1.object, yangNaikTurun)
 
-        bpy.context.view_layer.objects.active = Cutter1
-        bpy.ops.object.modifier_apply(modifier="Boolean")
         bpy.data.objects.remove(yangNaikTurun, do_unlink=True)
 
-        rotate = 0
+        # kursi1 = bpy.context.object
         for i in range(0, 360, 20):
-            rotate += 60
             x = 60 * math.cos(math.radians(i))
             y = 60 * math.sin(math.radians(i))
             kursi1 = Chair("chair",(x, y, 90))
             kursi1.rotate((0,0,i+90))
             # kursi2 = Chair("chair2",(17, -59, 90))
-            
-        utility.parent_objects(self.allObjects["Cutter1"], kursi1.object)
+            utility.parent_objects(Cutter1.object, kursi1.mainObject)
+        
         
 
 class Hysteria(basics.BasicElement):
@@ -60,6 +55,7 @@ class Hysteria(basics.BasicElement):
         super().__init__(name, coordinates)
         self.RotateThing = []
         self.glued()
+        self.animate()
 
     def create(self):
         center_pole = basic.Cylinder(name="center_pole", coords=(0, 0, 100))
@@ -105,16 +101,30 @@ class Hysteria(basics.BasicElement):
             "penyangga2" : penyangga2.object,
             "penyangga3" : penyangga3.object,
             "penyangga4" : penyangga4.object,
+            "center_pole" : center_pole.object
         }
 
     def glued(self):
         rotateThing = RotateThing("RotateThing", coordinates=(0,0,15))
         utility.parent_objects(self.allObjects["center_pole"], rotateThing.mainObject)
         self.RotateThing.append(rotateThing)
+        self.allObjects["RotateThing"] = rotateThing.mainObject #ini biar allObj nya kebawa
         
 
     def animate(self):
-        pass
+        end_frame = bpy.context.scene.frame_end
+        for i in range(1, end_frame):
+            self.allObjects["RotateThing"].rotation_euler[2] = math.radians(i*3)
+            self.allObjects["RotateThing"].keyframe_insert(data_path="rotation_euler", frame=i)
+
+            for kursi1 in self.RotateThing:
+                if i % 140 <= 30 or (i % 140 > 50 and i % 140 < 80):
+                    movement = 0.3
+                else:
+                    movement = -0.3
+                    
+                kursi1.mainObject.location.z += movement
+                kursi1.mainObject.keyframe_insert(data_path="location", frame=i)
 
 class Chair(basics.BasicElement):
     def create(self):
@@ -151,3 +161,9 @@ class Chair(basics.BasicElement):
         
 
         self.mainObject = seat.object
+        self.allObjects = {
+            "atas_kursi" : atasKursi.object,
+            "pengaman_kanan" : pengamanKanan.object,
+            "pengaman_kiri" : pengamanKiri.object,
+            "pengaman_bawah" : pengamanBawah.object,
+        }
