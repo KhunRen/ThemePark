@@ -5,6 +5,7 @@ import tools.objectProperty as objectProperty
 import tools.modifier as modifier
 import elements.komediputar as komediputar
 import elements.etc as etc
+import elements.hysteria as Hysteria
 import objs.importer as objimporter
 import elements.ombakbanyu as ombakbanyu
 import lights.basic as lightbasic
@@ -16,13 +17,14 @@ reload(utility)
 reload(objectProperty)
 reload(modifier)
 reload(komediputar)
+reload(Hysteria)
 reload(lightbasic)
 reload(render)
 reload(objimporter)
 reload(etc)
 reload(ombakbanyu)
 
-def buiild():
+def build():
 
     utility.clear_scene()
     utility.clear_materials()
@@ -30,6 +32,10 @@ def buiild():
 
     print("making ground")
     ground = etc.Ground("ground", (0, 0, 0))
+    
+    hysteria = Hysteria.Hysteria("Hysteria", (-5.29048 ,0,0.44713))
+    hysteria.scale((0.320664,0.320664,1.45756))
+
 
     print("making komedi")
     komedi = komediputar.Komedi_putar("komedi", (0, 0, 0))
@@ -57,8 +63,12 @@ def buiild():
     print("making light")
     irradiance = lightbasic.Irradiance_Volume("irradiance", (0, 0, 0.65),4.8,0,1,(6,6,6),0.01,10)
     irradiance.scale((1.5,1.5,1.5))
+    
+    irradiance = lightbasic.Irradiance_Volume("irradiance2", (-5.32997, 0, 1.56803 ),4.8,0,1,(6,6,6),0.01,10)
+    irradiance.scale((1.5,1.5,1.5))
 
 
     print("baking")
     utility.bake_indirect_lighting()
-
+    
+    print("done!")
