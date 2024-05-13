@@ -28,6 +28,14 @@ class Boat(basics.BasicElement):
         tengah = basic.Sphere(name="tengah", coords=(0, 0, 16))
         tengah.scale((14.7, 24.7499, 7.89263))
         
+        tengah_bool = basic.Sphere(name="tengah_bool", coords=(0, 0, 18))
+        tengah_bool.scale((13.7, 23.7499, 6.89263))
+
+        
+        modifier.boolean_difference(tengah.object, tengah_bool.object)
+        modifier.apply_all_modifier(tengah.object)
+        tengah_bool.remove()
+        
         utility.parent_objects(tengah.object, depan1.object)
         utility.parent_objects(tengah.object, depan2.object)
         utility.parent_objects(tengah.object, belakang1.object)
@@ -68,8 +76,21 @@ class Boat(basics.BasicElement):
         utility.parent_objects(tiang_ke_frame.object, tiang_tengah_belakang.object)
         utility.parent_objects(tiang_ke_frame.object, tiang_tengah_depan.object)
         
+        self.mainObject = tengah
         self.allObjects={
-            "tiang_ke_frame":tiang_ke_frame
+            "tiang_ke_frame":tiang_ke_frame,
+            "depan1": depan1.object,
+            "depan2": depan2.object,
+            "belakang1": belakang1.object,
+            "belakang2": belakang2.object,
+            "tengah": tengah.object,
+            "tengah_bool": tengah_bool.object,
+            "tiang_kiri1": tiang_kiri1.object,
+            "tiang_kiri2": tiang_kiri2.object,
+            "tiang_kanan1": tiang_kanan1.object,
+            "tiang_kanan2": tiang_kanan2.object,
+            "tiang_tengah_belakang": tiang_tengah_belakang.object,
+            "tiang_tengah_depan": tiang_tengah_depan.object,
         }
         
         
@@ -103,10 +124,19 @@ class Frame(basics.BasicElement):
         frame_kiri2.scale((0.7, 0.7, 32.11))
         
         kora = Boat("kora", (0, 0, 0))
+        
+        # # utility.parent_objects( Tangga,pole.object)
         utility.parent_objects(pole.object, kora.allObjects['tiang_ke_frame'].object)
         
+        self.mainObject = pole
         self.allObjects = {
             "pole": pole.object,
+            "plane": plane.object,
+            "frame_kanan1": frame_kanan1.object,
+            "frame_kanan2": frame_kanan2.object,
+            "frame_kiri1": frame_kiri1.object,
+            "frame_kiri2": frame_kiri2.object,
+            "boat": kora
         }
         
         
@@ -125,6 +155,14 @@ class Tangga(basics.BasicElement):
         tangga4 = basic.Cube(name="tangga4", coords=(30, 0, 2))
         tangga4.scale((2, 10, 2))
         
+        self.mainObject = tangga1
+        self.allObjects = {
+            "tangga1": tangga1.object,
+            "tangga2": tangga2.object,
+            "tangga3": tangga3.object,
+            "tangga4": tangga4.object,
+        }
+        
         
         
         
@@ -135,11 +173,27 @@ class Kora_Kora(basics.BasicElement):
         self.animate()
         
     def create(self):
-        kora2 = Frame("kora2", (0, 0, 0))
-        kora3 = Tangga("kora3", (0, 0, 0))
+        frame = Frame("frame", (0, 0, 0))
+        tangga = Tangga("tangga", (0, 0, 0))
         
+        utility.parent_objects(frame.allObjects["plane"], tangga.allObjects["tangga1"])
+        utility.parent_objects(frame.allObjects["plane"], tangga.allObjects["tangga2"])
+        utility.parent_objects(frame.allObjects["plane"], tangga.allObjects["tangga3"])
+        utility.parent_objects(frame.allObjects["plane"], tangga.allObjects["tangga4"])
+        
+        utility.parent_objects(frame.allObjects["plane"], frame.allObjects["frame_kanan1"])
+        utility.parent_objects(frame.allObjects["plane"], frame.allObjects["frame_kanan2"])
+        utility.parent_objects(frame.allObjects["plane"], frame.allObjects["frame_kiri1"])
+        utility.parent_objects(frame.allObjects["plane"], frame.allObjects["frame_kiri2"])
+        
+        utility.parent_objects(frame.allObjects["plane"], frame.allObjects["pole"])
+        
+        
+        
+        
+        self.mainObject = frame.mainObject
         self.allObjects = {
-            "pole": kora2.allObjects["pole"],
+            "pole": frame.allObjects["pole"],
         }
 
     def animate(self):
@@ -159,7 +213,7 @@ class Kora_Kora(basics.BasicElement):
             else:
                 rotation-=1
             
-            self.allObjects["pole"].rotation_euler = (math.radians(90), 
-                                                      math.radians(rotation), 
-                                                      math.radians(90))
+            self.allObjects["pole"].rotation_euler = (math.radians(0), 
+                                                      math.radians(0), 
+                                                      math.radians(rotation))
             self.allObjects["pole"].keyframe_insert(data_path="rotation_euler", frame=i)

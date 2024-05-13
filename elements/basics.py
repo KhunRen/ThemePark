@@ -10,7 +10,7 @@ class BasicElement:
         self.allObjects = None
 
         self.create()
-        # self.mainObject.name = name
+        self.mainObject.name = name
         self.translate(coordinates)
         
     def create(self):
@@ -18,7 +18,7 @@ class BasicElement:
     
     def translate(self, coordinates):
         self.coordinates = coordinates
-        # self.mainObject.location = coordinates
+        self.mainObject.location = coordinates
         
     def rotate(self, angle):
         self.mainObject.rotation_euler = (math.radians(
