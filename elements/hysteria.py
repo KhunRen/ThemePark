@@ -118,10 +118,10 @@ class Hysteria(basics.BasicElement):
             self.allObjects["RotateThing"].keyframe_insert(data_path="rotation_euler", frame=i)
 
             for kursi1 in self.RotateThing:
-                if i % 140 <= 30 or (i % 140 > 50 and i % 140 < 80):
-                    movement = 0.3
+                if i % end_frame <= 20 or (i % end_frame >60 and i % end_frame <= 100) or (i % end_frame >140 and i % end_frame <= 180) or (i % end_frame >220 and i % end_frame <= 260) or (i % end_frame >300 and i % end_frame <= 340) or (i % end_frame >380 and i % end_frame <= 420) or (i % end_frame >460 and i % end_frame <= 500):
+                    movement = 0.2 
                 else:
-                    movement = -0.3
+                    movement = -0.2 
                     
                 kursi1.mainObject.location.z += movement
                 kursi1.mainObject.keyframe_insert(data_path="location", frame=i)
