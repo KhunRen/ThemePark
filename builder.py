@@ -74,6 +74,6 @@ def build():
     irradiance.scale((1.5, 1.5, 1.5))
 
     print("baking")
-    utility.bake_indirect_lighting()
+    # utility.bake_indirect_lighting()
 
     print("done!")
