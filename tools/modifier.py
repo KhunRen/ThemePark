@@ -46,4 +46,9 @@ def cast(obj, factor):
 def apply_all_modifier(obj):
     utility.select_object(obj)
     bpy.ops.object.convert(target='MESH')
-    
+
+def boolean_difference(obj, target):
+    utility.select_object(obj)
+    bpy.ops.object.modifier_add(type='BOOLEAN')
+    bpy.context.object.modifiers["Boolean"].operation = 'DIFFERENCE'
+    bpy.context.object.modifiers["Boolean"].object = target

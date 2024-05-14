@@ -25,6 +25,7 @@ class OmbakBanyu(basics.BasicElement):
 
         seat = basic.Torus(name="seat", coords=(0, 0, 19.7393))
         seat.scale((23.6526, 23.6526, 2.09852))
+        
 
         back_rest = basic.Cylinder(name="back_rest", coords=(0, 0, 22.1694))
         back_rest.scale((29.0064, 29.0064, 2.09852))
@@ -103,10 +104,16 @@ class OmbakBanyu(basics.BasicElement):
         fence = basic.Cylinder(name="fence", coords=(0, 0, -0.02))
         fence.scale((32.9, 32.9, 1.7))
         modifier.wireframe(fence.object, 0.02)
+        
+        
 
         utility.parent_objects(seat.object, back_rest.object)
         utility.parent_objects(seat.object, top_fence.object)
         utility.parent_objects(seat.object, top_cone.object)
+        
+        seat.scale((27.6526, 27.6526, 2.09852))
+        seat.translate((0,0,16))
+        
         utility.parent_objects(base.object, center_pole.object)
         utility.parent_objects(base.object, center_pole_2.object)
         utility.parent_objects(base.object, lower_decor.object)
@@ -120,6 +127,11 @@ class OmbakBanyu(basics.BasicElement):
         utility.parent_objects(base.object, top_sphere_1.object)
         utility.parent_objects(base.object, top_sphere_2.object)
         utility.parent_objects(base.object, fence.object)
+        utility.parent_objects(base.object, cantilever_pole_1.object)
+        utility.parent_objects(base.object, cantilever_pole_2.object)
+        utility.parent_objects(base.object, cantilever_pole_3.object)
+        utility.parent_objects(base.object, cantilever_pole_4.object)
+        utility.parent_objects(top_sphere_2.object, seat.object)
 
 
         merah_carnival = materials.create_material("merah_carnival",(1,0.258994,0.286138,1),0,1)
@@ -153,17 +165,9 @@ class OmbakBanyu(basics.BasicElement):
         materials.assign_material(center_pole.object, krem)
         materials.assign_material(fence.object, krem)
         
+        pavement = materials.textured_material("pavement","//textures/pavement.png")
+        materials.assign_material(base.object, pavement)
         
-        
-        
-        
-        
-        
-        
-
-
-        # pink_pastel = materials.create_material("pink_pastel", (0.8,0.558836,0.57774,1.000),0,0.5,0.5)
-        # materials.assign_material()
         self.mainObject = base.object
         self.topObjects = {
             "top_cone": top_cone.object,
@@ -187,8 +191,7 @@ class OmbakBanyu(basics.BasicElement):
             "fence": fence.object,
         }
 
-        seat.scale((27.6526, 27.6526, 2.09852))
-        seat.translate((0,0,16))
+        
 
     def animate(self):
         # Mendapatkan jumlah frame pada animasi
@@ -199,17 +202,17 @@ class OmbakBanyu(basics.BasicElement):
             # Rotasi terhadap sumbu Y
             if i <= total_frames / 2:
                 # Bagian 1 (frame 1 - 250)
-                self.topObjects["seat"].rotation_euler[1] = math.radians(
+                self.bottomObjects["top_sphere_2"].rotation_euler[1] = math.radians(
                     -7.08689 * (i / (total_frames / 2))
                 )
             else:
                 # Bagian 2 (frame 251 - 500)
-                self.topObjects["seat"].rotation_euler[1] = math.radians(
+                self.bottomObjects["top_sphere_2"].rotation_euler[1] = math.radians(
                     -7.08689 * (1 - (i - total_frames / 2) / (total_frames / 2))
                 )
 
             # Rotasi terhadap sumbu Z
-            self.topObjects["seat"].rotation_euler[2] = math.radians(20 * i)
+            self.bottomObjects["top_sphere_2"].rotation_euler[2] = math.radians(20 * i)
 
             # Menyisipkan keyframe untuk rotasi objek "seat"
-            self.topObjects["seat"].keyframe_insert(data_path="rotation_euler", frame=i)
+            self.bottomObjects["top_sphere_2"].keyframe_insert(data_path="rotation_euler", frame=i)
