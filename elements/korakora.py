@@ -4,10 +4,12 @@ import primitif.basic as basic
 import tools.utility as utility
 import tools.modifier as modifier
 import tools.objectProperty as objectProperty
+import tools.materials as materials
 import bpy
 from importlib import reload
 import random
 reload(basics)
+reload(materials)
 
 class Boat(basics.BasicElement):
     def create(self):
@@ -76,6 +78,31 @@ class Boat(basics.BasicElement):
         utility.parent_objects(tiang_ke_frame.object, tiang_tengah_belakang.object)
         utility.parent_objects(tiang_ke_frame.object, tiang_tengah_depan.object)
         
+        purple_color = (0.5, 0.0, 1.0, 1.0)
+        neon_color = (0.0, 1.0, 1.0, 1.0)
+        green_color = (0.0, 1.0, 0.0, 1.0)
+        black_color = (0.0, 0.0, 0.0, 1.0)
+        red_color = (1.0, 0.0, 0.0, 1.0)
+        
+        purple_material = materials.create_material("PurpleMaterial", purple_color, 0, 1, 0)
+        neon_material = materials.create_material("NeonMaterial", neon_color, 0, 1, 0)
+        black_material = materials.create_material("BlackMaterial", black_color, 0, 1, 0)
+        merah_kapal_material = materials.create_material("MerahKapalMaterial", red_color, 0, 1, 0)
+        
+        materials.assign_material(tiang_tengah_belakang.object, neon_material)
+        materials.assign_material(tiang_tengah_depan.object, neon_material)
+        materials.assign_material(tiang_kanan1.object, purple_material)
+        materials.assign_material(tiang_kanan2.object, purple_material)
+        materials.assign_material(tiang_kiri1.object, purple_material)
+        materials.assign_material(tiang_kiri2.object, purple_material)
+        materials.assign_material(tiang_ke_frame.object, black_material)
+        materials.assign_material(tengah.object, merah_kapal_material)
+        materials.assign_material(belakang2.object, purple_material)
+        materials.assign_material(depan2.object, purple_material)
+        materials.assign_material(depan1.object, purple_material)
+        materials.assign_material(belakang1.object, purple_material)
+        
+
         self.mainObject = tengah
         self.allObjects={
             "tiang_ke_frame":tiang_ke_frame,
@@ -125,6 +152,31 @@ class Frame(basics.BasicElement):
         
         kora = Boat("kora", (0, 0, 0))
         
+        # warna
+        yellow_color = (1.0, 1.0, 0.0, 1.0)
+        blue_color = (0.0, 0.0, 1.0, 1.0)
+        red_color = (1.0, 0.0, 0.0, 1.0)
+        orange_color = (1.0, 0.5, 0.0, 1.0)
+        green_color = (0.0, 1.0, 0.0, 1.0)
+        purple_color = (0.5, 0.0, 1.0, 1.0)
+        neon_color = (0.0, 1.0, 1.0, 1.0)
+        
+        yellow_material = materials.create_material("YellowMaterial", yellow_color, 0, 1, 0)
+        blue_material = materials.create_material("BlueMaterial", blue_color, 0, 1, 0)
+        red_material = materials.create_material("RedMaterial", red_color, 0, 1, 0)
+        orange_material = materials.create_material("OrangeMaterial", orange_color, 0, 1, 0)
+        green_material = materials.create_material("GreenMaterial", green_color, 0, 1, 0)
+        purple_material = materials.create_material("PurpleMaterial", purple_color, 0, 1, 0)
+        neon_material = materials.create_material("NeonMaterial", neon_color, 0, 1, 0)
+        
+        
+        materials.assign_material(frame_kanan1.object, yellow_material)
+        materials.assign_material(frame_kanan2.object, yellow_material)
+        materials.assign_material(frame_kiri1.object, yellow_material)
+        materials.assign_material(frame_kiri2.object, yellow_material)
+        materials.assign_material(pole.object, neon_material)
+
+        
         # # utility.parent_objects( Tangga,pole.object)
         utility.parent_objects(pole.object, kora.allObjects['tiang_ke_frame'].object)
         
@@ -154,6 +206,24 @@ class Tangga(basics.BasicElement):
         
         tangga4 = basic.Cube(name="tangga4", coords=(30, 0, 2))
         tangga4.scale((2, 10, 2))
+        
+        red_color = (1.0, 0.0, 0.0, 1.0)
+        green_color = (0.0, 1.0, 0.0, 1.0)
+        yellow_color = (1.0, 1.0, 0.0, 1.0)
+        blue_color = (0.0, 0.0, 1.0, 1.0)
+        
+        
+        red_material = materials.create_material("RedMaterial", red_color, 0, 1, 0)
+        green_material = materials.create_material("GreenMaterial", green_color, 0, 1, 0)
+        yellow_material = materials.create_material("YellowMaterial", yellow_color, 0, 1, 0)
+        blue_material = materials.create_material("BlueMaterial", blue_color, 0, 1, 0)
+        
+        
+        materials.assign_material(tangga4.object, red_material)
+        materials.assign_material(tangga3.object, yellow_material)
+        materials.assign_material(tangga2.object, green_material)
+        materials.assign_material(tangga1.object, blue_material)
+        
         
         self.mainObject = tangga1
         self.allObjects = {
@@ -188,8 +258,7 @@ class Kora_Kora(basics.BasicElement):
         
         utility.parent_objects(frame.allObjects["plane"], frame.allObjects["pole"])
         
-        
-        
+
         
         self.mainObject = frame.allObjects["plane"]
         self.allObjects = {
