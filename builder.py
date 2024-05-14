@@ -28,12 +28,13 @@ reload(korakora)
 
 
 def build():
+
     utility.clear_scene()
     utility.clear_materials()
     utility.delete_light_cache()
 
     print("making ground")
-    ground = etc.Ground("ground", (0, 0, 0), False,False)
+    ground = etc.Ground("ground", (0, 0, 0))
 
     hysteria = Hysteria.Hysteria("Hysteria", (-5.29048, 0, 0.44713))
     hysteria.scale((0.320664, 0.320664, 1.45756))
@@ -70,10 +71,16 @@ def build():
     irradiance.scale((1.5, 1.5, 1.5))
 
     irradiance = lightbasic.Irradiance_Volume(
-        "irradiance2", (-5.32997, 0, 1.56803), 4.8, 0, 1, (6, 6, 6), 0.01, 10)
+        "irradiance2", (-5.32997, 0, 1.56803), 4.8, 0, 1, (3, 3, 3), 0.01, 10)
     irradiance.scale((1.5, 1.5, 1.5))
+    
+    irradiance = lightbasic.Irradiance_Volume(
+        "irradiance2", (-0.029212 , -5.45144 , 1.08465 ), 4.8, 0, 1, (3, 3, 3), 0.01, 10)
+    irradiance.scale((1.5, 1.5, 1.5))
+    
+    
 
     print("baking")
-    # utility.bake_indirect_lighting()
+    utility.bake_indirect_lighting()
 
     print("done!")

@@ -134,15 +134,39 @@ class OmbakBanyu(basics.BasicElement):
         utility.parent_objects(top_sphere_2.object, seat.object)
 
 
-        merah_carnival = materials.create_material("merah_carnival",(1.000,0.258994,0.286138,1.000),0,1.000)
+        merah_carnival = materials.create_material("merah_carnival",(1,0.258994,0.286138,1),0,1)
         materials.assign_material(top_cone.object, merah_carnival)
         materials.assign_material(cantilever_pole_1.object, merah_carnival)
         materials.assign_material(cantilever_pole_2.object, merah_carnival)
         materials.assign_material(cantilever_pole_3.object, merah_carnival)
         materials.assign_material(cantilever_pole_4.object, merah_carnival)
         materials.assign_material(ring_decor_2.object, merah_carnival)
+        
+        kuning_neon = materials.create_material("kuning_neon",(0.8,0.72534,0.526459,1), 0,1,0,(1,0.53041,0.28534,1),28.4)
+        materials.assign_material(top_fence.object, kuning_neon)
+        
+        biru_neon = materials.create_material("biru_neon",(0,0,0,1), 0,1,0,(0.212933,0.539835,1,1),28.4)
+        materials.assign_material(top_sphere_1.object, biru_neon)
+        materials.assign_material(ring_decor_1.object, biru_neon)
 
-        pink_pastel = materials.create_material("pink_pastel", (0.8,0.558836,0.57774,1.000),0,0.5,0.5)
+        biru_pastel = materials.create_material("biru_pastel",(0.53071,0.748868,1,1), 0,0.5,0)
+        materials.assign_material(back_rest.object, biru_pastel)
+        
+        biru_tosca = materials.create_material("biru_tosca",(0.322859,0.776269,0.799103,1), 0,0.5,0)
+        materials.assign_material(seat.object, biru_tosca)
+        
+        pink_pastel = materials.create_material("pink_pastel",(0.8,0.558836,0.57774,1), 0,0.5,0)
+        materials.assign_material(diagonal_pole_1.object, pink_pastel)
+        materials.assign_material(diagonal_pole_2.object, pink_pastel)
+        materials.assign_material(diagonal_pole_3.object, pink_pastel)
+        materials.assign_material(diagonal_pole_4.object, pink_pastel)
+        
+        krem = materials.create_material("krem",(0.8,0.657788,0.556197,1), 0,1,0)
+        materials.assign_material(center_pole.object, krem)
+        materials.assign_material(fence.object, krem)
+        
+        pavement = materials.textured_material("pavement","//textures/pavement.png")
+        materials.assign_material(base.object, pavement)
         
         self.mainObject = base.object
         self.topObjects = {
